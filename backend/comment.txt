@@ -1,0 +1,165 @@
+  // ---------- VERIFY OTP ----------
+  router.post("/admin/verify-otp", (req, res) => {
+    const { phone, otp } = req.body;
+
+    if (!/^\d{10}$/.test(phone) || !/^\d{6}$/.test(otp)) {
+      return res.status(400).json({ status: false, error: "Invalid input" });
+    }
+
+    db.query(
+      'SELECT id, role FROM employees WHERE phone = ? AND otpCode = ? AND status = "Active"',
+      [phone, otp],
+      (err, results) => {
+        if (err)
+          return res
+            .status(500)
+            .json({ status: false, error: "Database error" });
+        if (results.length === 0 || results[0].role !== "Admin") {
+          return res
+            .status(401)
+            .json({ status: false, error: "Invalid OTP or unauthorized" });
+        }
+
+        const employeeId = results[0].id;
+        const encryptedPhone = encrypt(phone);
+
+        if (!process.env.JWT_SECRET) {
+          return res
+            .status(500)
+            .json({ status: false, error: "JWT_SECRET not set" });
+        }
+
+        const token = jwt.sign(
+          { employeeId, role: "Admin", phone: encryptedPhone },
+          process.env.JWT_SECRET,
+          { expiresIn: "7d" },
+        );
+
+        // Clear OTP and store token
+        db.query(
+          "UPDATE employees SET otpCode = NULL, token = ?, updatedAt = NOW() WHERE id = ?",
+          [token, employeeId],
+          (err) => {
+            if (err)
+              return res
+                .status(500)
+                .json({ status: false, error: "Failed to store token" });
+
+            res.json({
+              status: true,
+              token,
+              encryptedPhone,
+              message: "Login successful",
+            });
+          },
+        );
+      },
+    );
+  });
+
+
+
+        if (response.data.status) {
+        // Save JWT only
+        Cookies.set("adminToken", response.data.token, { expires: 7 });
+
+        toast.success("Logged in Successfully!");
+        if (setAuth) setAuth(true);
+        setTimeout(() => navigate("/dashboard"), 800);
+      } else {
+        toast.error(response.data.error || "Invalid OTP");
+      }
+
+
+
+
+      const jwt = require('jsonwebtoken');
+
+module.exports = (db) => {
+  return (req, res, next) => {
+    // Extract token from Authorization header
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ status: false, error: 'No token provided' });
+    }
+
+    // Verify JWT
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      console.error('JWT verification error:', err);
+      return res.status(401).json({ status: false, error: 'Invalid or expired token' });
+    }
+
+    // Check token and role in employees table
+    db.query(
+      `SELECT id, role FROM employees WHERE token = ? AND role = ?`,
+      [token, 'Admin'],
+      (err, results) => {
+        if (err) {
+          console.error('Database error in authMiddleware:', err);
+          return res.status(500).json({ status: false, error: 'Database error' });
+        }
+
+        if (!results || results.length === 0) {
+          return res.status(403).json({ status: false, error: 'Unauthorized: invalid token or not Admin' });
+        }
+
+        // Attach user info to request
+        req.user = {
+          employeeId: results[0].id,
+          role: results[0].role,
+        };
+
+        next();
+      }
+    );
+  };
+};
+
+
+
+  // ---------- SEND OTP ----------
+  router.post("/admin/send-otp", (req, res) => {
+    const { phone } = req.body;
+
+    if (!phone || !/^\d{10}$/.test(phone)) {
+      return res
+        .status(400)
+        .json({ status: false, error: "Invalid phone number" });
+    }
+
+    db.query(
+      'SELECT id, role FROM employees WHERE phone = ? AND status = "Active"',
+      [phone],
+      (err, results) => {
+        if (err)
+          return res
+            .status(500)
+            .json({ status: false, error: "Database error" });
+        if (results.length === 0 || results[0].role !== "Admin") {
+          return res
+            .status(403)
+            .json({ status: false, error: "Only active Admins can log in" });
+        }
+
+        const otp = crypto.randomInt(100000, 999999).toString();
+        const employeeId = results[0].id;
+
+        db.query(
+          "UPDATE employees SET otpCode = ?, updatedAt = NOW() WHERE id = ?",
+          [otp, employeeId],
+          (err) => {
+            if (err)
+              return res
+                .status(500)
+                .json({ status: false, error: "Failed to store OTP" });
+
+            console.log(`OTP for ${phone}: ${otp}`); // Send via SMS in production
+            res.json({ status: true, message: "OTP sent successfully" });
+          },
+        );
+      },
+    );
+  });
