@@ -14,7 +14,7 @@ const roles = require('./routes/roles')
 const permissions = require('./routes/permissions')
 const leadhistory = require('./routes/leadhistory')
 const services = require('./routes/services')
-// const cors = require('cors');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 5000
