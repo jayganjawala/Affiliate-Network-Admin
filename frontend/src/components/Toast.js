@@ -20,7 +20,7 @@ const Toast = () => {
       position="top-center"
       reverseOrder={false}
       toastOptions={{
-        duration: 2000,
+        duration: 1000,
         style: {
           background: "#fff",
           color: "#363636",
