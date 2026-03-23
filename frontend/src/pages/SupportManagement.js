@@ -284,428 +284,438 @@ function SupportManagement() {
 
   /* ================= UI ================= */
   return (
-    <div className="container mt-3">
-      <div className="row mb-3">
-        <div className="col">
-          <i
-            className="fa fa-arrow-left mt-2"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/dashboard")}
-          ></i>
-        </div>
-      </div>
-
-      <div className="row g-3 mb-3">
-        <div className="col-md-12">
-          <h4 className="fw-bold mb-0">Support Management</h4>
-        </div>
-      </div>
-
-      {/* Filters */}
-      <div className="row g-3 mb-3">
-        <div className="col-md-4 col-12">
-          <input
-            type="text"
-            className="form-control form-control-sm"
-            placeholder="Search by Name, Phone, Email"
-            value={filters.search}
-            onChange={(e) => {
-              if (!canSearchSupport) {
-                toast.error("You don't have authority");
-                return;
-              }
-              setFilters({ ...filters, search: e.target.value });
-            }}
-            // disabled={!canSearchSupport}
-            style={{ opacity: canSearchSupport ? 1 : 0.6 }}
-          />
+    <section className="poppins-regular py-3">
+      <div className="container">
+        <div className="row mb-3">
+          <div className="col">
+            <i
+              className="fa fa-arrow-left mt-2"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/dashboard")}
+            ></i>
+          </div>
         </div>
 
-        <div className="col-md-4 col-6">
-          <input
-            type="date"
-            className="form-control form-control-sm"
-            value={filters.date}
-            onChange={(e) => {
-              if (!canSearchSupport) {
-                toast.error("You don't have authority");
-                return;
-              }
-              setFilters({ ...filters, search: e.target.value });
-            }}
-            // disabled={!canSearchSupport}
-            style={{ opacity: canSearchSupport ? 1 : 0.6 }}
-          />
-        </div>
-
-        <div className="col-md-4 col-6">
-          <select
-            className="form-select form-select-sm"
-            value={filters.status}
-            onChange={(e) => {
-              if (!canSearchSupport) {
-                toast.error("You don't have authority");
-                return;
-              }
-              setFilters({ ...filters, search: e.target.value });
-            }}
-            // disabled={!canSearchSupport}
-            style={{ opacity: canSearchSupport ? 1 : 0.6 }}
-          >
-            <option value="">Status</option>
-            <option value="Open">Open ({openCount})</option>
-            <option value="In Progress">In Progress ({inProgressCount})</option>
-            <option value="Closed">Closed ({closedCount})</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Applied Filters */}
-      {(filters.search || filters.status || filters.date) && (
         <div className="row g-3 mb-3">
-          <div className="col-auto">
-            <span className="fw-semibold">Filters applied:</span>
+          <div className="col-md-12">
+            <h4 className="fw-bold mb-0">Support Management</h4>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="row g-3 mb-3">
+          <div className="col-md-4 col-12">
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              placeholder="Search by Name, Phone, Email"
+              value={filters.search}
+              onChange={(e) => {
+                if (!canSearchSupport) {
+                  toast.error("You don't have authority");
+                  return;
+                }
+                setFilters({ ...filters, search: e.target.value });
+              }}
+              // disabled={!canSearchSupport}
+              style={{ opacity: canSearchSupport ? 1 : 0.6 }}
+            />
           </div>
 
-          {filters.search && (
-            <div className="col-auto">
-              <span className="badge bg-secondary">
-                Search: {filters.search}{" "}
-                <i
-                  className="fa fa-times ms-1"
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    setFilters((prev) => ({ ...prev, search: "" }))
-                  }
-                ></i>
-              </span>
-            </div>
-          )}
+          <div className="col-md-4 col-6">
+            <input
+              type="date"
+              className="form-control form-control-sm"
+              value={filters.date}
+              onChange={(e) => {
+                if (!canSearchSupport) {
+                  toast.error("You don't have authority");
+                  return;
+                }
+                setFilters({ ...filters, search: e.target.value });
+              }}
+              // disabled={!canSearchSupport}
+              style={{ opacity: canSearchSupport ? 1 : 0.6 }}
+            />
+          </div>
 
-          {filters.status && (
-            <div className="col-auto">
-              <span className="badge bg-secondary">
-                Status: {filters.status}{" "}
-                <i
-                  className="fa fa-times ms-1"
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    setFilters((prev) => ({ ...prev, status: "" }))
-                  }
-                ></i>
-              </span>
-            </div>
-          )}
-
-          {filters.date && (
-            <div className="col-auto">
-              <span className="badge bg-secondary">
-                Date: {filters.date}{" "}
-                <i
-                  className="fa fa-times ms-1"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setFilters((prev) => ({ ...prev, date: "" }))}
-                ></i>
-              </span>
-            </div>
-          )}
+          <div className="col-md-4 col-6">
+            <select
+              className="form-select form-select-sm"
+              value={filters.status}
+              onChange={(e) => {
+                if (!canSearchSupport) {
+                  toast.error("You don't have authority");
+                  return;
+                }
+                setFilters({ ...filters, search: e.target.value });
+              }}
+              // disabled={!canSearchSupport}
+              style={{ opacity: canSearchSupport ? 1 : 0.6 }}
+            >
+              <option value="">Status</option>
+              <option value="Open">Open ({openCount})</option>
+              <option value="In Progress">
+                In Progress ({inProgressCount})
+              </option>
+              <option value="Closed">Closed ({closedCount})</option>
+            </select>
+          </div>
         </div>
-      )}
 
-      {/* TABLE */}
-      <div className="card border-0 mb-3">
-        {loading ? (
-          <div className="text-center p-3">Loading...</div>
-        ) : (
-          <div className="table-responsive rounded">
-            <table className="table table-striped small mb-0">
-              <thead className="table-dark">
-                <tr>
-                  <th>ID</th>
-                  <th>User Name</th>
-                  <th>Contact</th>
-                  <th>Conversation</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentGroups.map((group) => (
-                  <tr key={group.main.id}>
-                    <td style={{ minWidth: "50px" }}>{group.main.id}</td>
-                    <td style={{ minWidth: "180px" }}>
-                      {group.main.userPrefix} {group.main.userFullName}
-                    </td>
-                    <td style={{ minWidth: "130px", fontSize: "15px" }}>
-                      <i
-                        className="fa-solid fa-phone text-success me-2"
-                        style={{ cursor: "pointer" }}
-                        title="Copy Phone"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleCopy(group.main.userPhone, "Phone number");
-                        }}
-                      ></i>
-                      <i
-                        className="fa-solid fa-envelope text-primary me-2"
-                        style={{ cursor: "pointer" }}
-                        title="Copy Email"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleCopy(group.main.userEmail, "Email");
-                        }}
-                      ></i>
-                      <i
-                        className="fa-solid fa-id-card text-secondary"
-                        style={{ cursor: "pointer" }}
-                        title="View Details"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openDetailsModal(group.main);
-                        }}
-                      ></i>
-                    </td>
+        {/* Applied Filters */}
+        {(filters.search || filters.status || filters.date) && (
+          <div className="row g-3 mb-3">
+            <div className="col-auto">
+              <span className="fw-semibold">Filters applied:</span>
+            </div>
 
-                    <td style={{ minWidth: "450px" }}>
-                      <div className="p-2 mb-2 bg-light border rounded w-75">
-                        <strong>Main:</strong>
-                        <div>{group.main.description}</div>
-                        <small className="text-muted">
-                          {dayjs(group.main.createdAt).format(
-                            "DD MMM YYYY hh:mm A",
-                          )}
-                        </small>
-                      </div>
+            {filters.search && (
+              <div className="col-auto">
+                <span className="badge bg-secondary">
+                  Search: {filters.search}{" "}
+                  <i
+                    className="fa fa-times ms-1"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      setFilters((prev) => ({ ...prev, search: "" }))
+                    }
+                  ></i>
+                </span>
+              </div>
+            )}
 
-                      {/* Toggle */}
-                      {group.followups.length > 0 && (
-                        <div
-                          className="text-primary mb-2"
-                          style={{ cursor: "pointer", fontSize: "13px" }}
-                          onClick={() => toggleRow(group.main.id)}
-                        >
-                          {expandedRows[group.main.id]
-                            ? "▼ Hide Followups"
-                            : `▶ Show Followups (${group.followups.length})`}
-                        </div>
-                      )}
+            {filters.status && (
+              <div className="col-auto">
+                <span className="badge bg-secondary">
+                  Status: {filters.status}{" "}
+                  <i
+                    className="fa fa-times ms-1"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      setFilters((prev) => ({ ...prev, status: "" }))
+                    }
+                  ></i>
+                </span>
+              </div>
+            )}
 
-                      {/* Timeline */}
-                      {expandedRows[group.main.id] && (
-                        <div
-                          style={{
-                            borderLeft: "2px solid #0d6efd",
-                            marginLeft: "10px",
-                            paddingLeft: "20px",
-                          }}
-                        >
-                          {group.followups.map((f) => (
-                            <div
-                              key={f.id}
-                              className="position-relative mb-3 d-flex justify-content-between w-75"
-                            >
-                              <div
-                                style={{
-                                  width: "10px",
-                                  height: "10px",
-                                  background: "#0d6efd",
-                                  borderRadius: "50%",
-                                  position: "absolute",
-                                  left: "-26px",
-                                  top: "8px",
-                                }}
-                              ></div>
-
-                              <div className="p-2 bg-body border rounded flex-grow-1 d-flex justify-content-between align-items-start me-2">
-                                <div>
-                                  <strong>Followup:</strong>
-                                  <div>{f.description}</div>
-                                  <small className="text-muted">
-                                    {dayjs(f.updatedAt).format(
-                                      "DD MMM YYYY hh:mm A",
-                                    )}
-                                  </small>
-                                </div>
-                                <div>
-                                  <i
-                                    onClick={() => {
-                                      if (!canUpdateSupport) {
-                                        toast.error("You don't have authority");
-                                        return;
-                                      }
-                                      handleEdit(f);
-                                    }}
-                                    className={`fa-solid fa-pen ${
-                                      canUpdateSupport
-                                        ? "text-primary"
-                                        : "text-muted"
-                                    }`}
-                                    style={{
-                                      cursor: "pointer",
-                                      opacity: canUpdateSupport ? 1 : 0.5,
-                                    }}
-                                  ></i>
-                                  <i
-                                    onClick={() => {
-                                      if (!canDeleteSupport) {
-                                        toast.error("You don't have authority");
-                                        return;
-                                      }
-                                      handleDelete(f);
-                                    }}
-                                    className={`fa-solid fa-trash ms-1 ${
-                                      canDeleteSupport
-                                        ? "text-danger"
-                                        : "text-muted"
-                                    }`}
-                                    style={{
-                                      cursor: "pointer",
-                                      opacity: canDeleteSupport ? 1 : 0.5,
-                                    }}
-                                  ></i>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </td>
-
-                    <td style={{ minWidth: "100px" }}>
-                      <span
-                        className={`badge ${
-                          getLatestStatus(group)?.toLowerCase() === "closed"
-                            ? "bg-success"
-                            : getLatestStatus(group)?.toLowerCase() ===
-                                "in progress"
-                              ? "bg-info"
-                              : "bg-warning text-dark"
-                        }`}
-                      >
-                        {getLatestStatus(group)}
-                      </span>
-                    </td>
-
-                    {/* Action Column */}
-                    <td style={{ minWidth: "50px", fontSize: "15px" }}>
-                      <i
-                        onClick={() => {
-                          if (!canCreateSupport) {
-                            toast.error("You don't have authority");
-                            return;
-                          }
-                          handleAddMode(group.main);
-                        }}
-                        className={`fa-solid fa-pen-to-square ${
-                          canCreateSupport ? "text-primary" : "text-muted"
-                        }`}
-                        style={{
-                          cursor: "pointer",
-                          opacity: canCreateSupport ? 1 : 0.5,
-                        }}
-                      ></i>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {filters.date && (
+              <div className="col-auto">
+                <span className="badge bg-secondary">
+                  Date: {filters.date}{" "}
+                  <i
+                    className="fa fa-times ms-1"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      setFilters((prev) => ({ ...prev, date: "" }))
+                    }
+                  ></i>
+                </span>
+              </div>
+            )}
           </div>
         )}
-      </div>
 
-      {/* Pagination */}
-      <div className="d-flex justify-content-between mb-3">
-        <div>
-          Page {currentPage} of {totalPages} • {filteredGroups.length}
-        </div>
-        <div>
-          <button
-            className="btn btn-sm border-0"
-            disabled={currentPage === 1}
-            onClick={goToPreviousPage}
-          >
-            <i className="fa-solid fa-chevron-left"></i>
-          </button>
-          <button
-            className="btn btn-sm border-0"
-            disabled={currentPage === totalPages || totalPages === 0}
-            onClick={goToNextPage}
-          >
-            <i className="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
+        {/* TABLE */}
+        <div className="card border-0 mb-3">
+          {loading ? (
+            <div className="text-center p-3">Loading...</div>
+          ) : (
+            <div className="table-responsive rounded">
+              <table className="table table-striped small mb-0">
+                <thead className="table-dark">
+                  <tr>
+                    <th>ID</th>
+                    <th>User Name</th>
+                    <th>Contact</th>
+                    <th>Conversation</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentGroups.map((group) => (
+                    <tr key={group.main.id}>
+                      <td style={{ minWidth: "50px" }}>{group.main.id}</td>
+                      <td style={{ minWidth: "180px" }}>
+                        {group.main.userPrefix} {group.main.userFullName}
+                      </td>
+                      <td style={{ minWidth: "130px", fontSize: "15px" }}>
+                        <i
+                          className="fa-solid fa-phone text-success me-2"
+                          style={{ cursor: "pointer" }}
+                          title="Copy Phone"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCopy(group.main.userPhone, "Phone number");
+                          }}
+                        ></i>
+                        <i
+                          className="fa-solid fa-envelope text-primary me-2"
+                          style={{ cursor: "pointer" }}
+                          title="Copy Email"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCopy(group.main.userEmail, "Email");
+                          }}
+                        ></i>
+                        <i
+                          className="fa-solid fa-id-card text-secondary"
+                          style={{ cursor: "pointer" }}
+                          title="View Details"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openDetailsModal(group.main);
+                          }}
+                        ></i>
+                      </td>
 
-      {/* Edit / Add Modal */}
-      <div className="modal fade" id="editSupportModal" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5>{formData.id ? "Edit Followup" : "Add Followup"}</h5>
-              <button className="btn-close" data-bs-dismiss="modal"></button>
+                      <td style={{ minWidth: "450px" }}>
+                        <div className="p-2 mb-2 bg-light border rounded w-75">
+                          <strong>Main:</strong>
+                          <div>{group.main.description}</div>
+                          <small className="text-muted">
+                            {dayjs(group.main.createdAt).format(
+                              "DD MMM YYYY hh:mm A",
+                            )}
+                          </small>
+                        </div>
+
+                        {/* Toggle */}
+                        {group.followups.length > 0 && (
+                          <div
+                            className="text-primary mb-2"
+                            style={{ cursor: "pointer", fontSize: "13px" }}
+                            onClick={() => toggleRow(group.main.id)}
+                          >
+                            {expandedRows[group.main.id]
+                              ? "▼ Hide Followups"
+                              : `▶ Show Followups (${group.followups.length})`}
+                          </div>
+                        )}
+
+                        {/* Timeline */}
+                        {expandedRows[group.main.id] && (
+                          <div
+                            style={{
+                              borderLeft: "2px solid #0d6efd",
+                              marginLeft: "10px",
+                              paddingLeft: "20px",
+                            }}
+                          >
+                            {group.followups.map((f) => (
+                              <div
+                                key={f.id}
+                                className="position-relative mb-3 d-flex justify-content-between w-75"
+                              >
+                                <div
+                                  style={{
+                                    width: "10px",
+                                    height: "10px",
+                                    background: "#0d6efd",
+                                    borderRadius: "50%",
+                                    position: "absolute",
+                                    left: "-26px",
+                                    top: "8px",
+                                  }}
+                                ></div>
+
+                                <div className="p-2 bg-body border rounded flex-grow-1 d-flex justify-content-between align-items-start me-2">
+                                  <div>
+                                    <strong>Followup:</strong>
+                                    <div>{f.description}</div>
+                                    <small className="text-muted">
+                                      {dayjs(f.updatedAt).format(
+                                        "DD MMM YYYY hh:mm A",
+                                      )}
+                                    </small>
+                                  </div>
+                                  <div>
+                                    <i
+                                      onClick={() => {
+                                        if (!canUpdateSupport) {
+                                          toast.error(
+                                            "You don't have authority",
+                                          );
+                                          return;
+                                        }
+                                        handleEdit(f);
+                                      }}
+                                      className={`fa-solid fa-pen ${
+                                        canUpdateSupport
+                                          ? "text-primary"
+                                          : "text-muted"
+                                      }`}
+                                      style={{
+                                        cursor: "pointer",
+                                        opacity: canUpdateSupport ? 1 : 0.5,
+                                      }}
+                                    ></i>
+                                    <i
+                                      onClick={() => {
+                                        if (!canDeleteSupport) {
+                                          toast.error(
+                                            "You don't have authority",
+                                          );
+                                          return;
+                                        }
+                                        handleDelete(f);
+                                      }}
+                                      className={`fa-solid fa-trash ms-1 ${
+                                        canDeleteSupport
+                                          ? "text-danger"
+                                          : "text-muted"
+                                      }`}
+                                      style={{
+                                        cursor: "pointer",
+                                        opacity: canDeleteSupport ? 1 : 0.5,
+                                      }}
+                                    ></i>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </td>
+
+                      <td style={{ minWidth: "100px" }}>
+                        <span
+                          className={`badge ${
+                            getLatestStatus(group)?.toLowerCase() === "closed"
+                              ? "bg-success"
+                              : getLatestStatus(group)?.toLowerCase() ===
+                                  "in progress"
+                                ? "bg-info"
+                                : "bg-warning text-dark"
+                          }`}
+                        >
+                          {getLatestStatus(group)}
+                        </span>
+                      </td>
+
+                      {/* Action Column */}
+                      <td style={{ minWidth: "50px", fontSize: "15px" }}>
+                        <i
+                          onClick={() => {
+                            if (!canCreateSupport) {
+                              toast.error("You don't have authority");
+                              return;
+                            }
+                            handleAddMode(group.main);
+                          }}
+                          className={`fa-solid fa-pen-to-square ${
+                            canCreateSupport ? "text-primary" : "text-muted"
+                          }`}
+                          style={{
+                            cursor: "pointer",
+                            opacity: canCreateSupport ? 1 : 0.5,
+                          }}
+                        ></i>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-            <form onSubmit={handleSubmit}>
-              <div className="modal-body">
-                <select
-                  className="form-select mb-3"
-                  value={formData.status}
-                  onChange={(e) =>
-                    setFormData({ ...formData, status: e.target.value })
-                  }
-                >
-                  <option value="Open">Open</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Closed">Closed</option>
-                </select>
+          )}
+        </div>
 
-                <textarea
-                  className="form-control"
-                  placeholder="Reply..."
-                  value={formData.description}
-                  onChange={(e) =>
-                    setFormData({ ...formData, description: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="modal-footer">
-                <button className="btn btn-primary">
-                  {formData.id ? "Update" : "Add"}
-                </button>
-              </div>
-            </form>
+        {/* Pagination */}
+        <div className="d-flex justify-content-between mb-3">
+          <div>
+            Page {currentPage} of {totalPages} • {filteredGroups.length}
+          </div>
+          <div>
+            <button
+              className="btn btn-sm border-0"
+              disabled={currentPage === 1}
+              onClick={goToPreviousPage}
+            >
+              <i className="fa-solid fa-chevron-left"></i>
+            </button>
+            <button
+              className="btn btn-sm border-0"
+              disabled={currentPage === totalPages || totalPages === 0}
+              onClick={goToNextPage}
+            >
+              <i className="fa-solid fa-chevron-right"></i>
+            </button>
           </div>
         </div>
-      </div>
 
-      {/* Contact Details Modal */}
-      <div className="modal fade" id="detailsModal" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Contact Details</h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div className="modal-body">
-              {detailsUser && (
-                <div>
-                  <p>
-                    <strong>Phone:</strong> {detailsUser.userPhone}
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {detailsUser.userEmail}
-                  </p>
+        {/* Edit / Add Modal */}
+        <div className="modal fade" id="editSupportModal" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5>{formData.id ? "Edit Followup" : "Add Followup"}</h5>
+                <button className="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="modal-body">
+                  <select
+                    className="form-select mb-3"
+                    value={formData.status}
+                    onChange={(e) =>
+                      setFormData({ ...formData, status: e.target.value })
+                    }
+                  >
+                    <option value="Open">Open</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+
+                  <textarea
+                    className="form-control"
+                    placeholder="Reply..."
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({ ...formData, description: e.target.value })
+                    }
+                    required
+                  />
                 </div>
-              )}
+                <div className="modal-footer">
+                  <button className="btn btn-primary">
+                    {formData.id ? "Update" : "Add"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Details Modal */}
+        <div className="modal fade" id="detailsModal" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Contact Details</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
+              <div className="modal-body">
+                {detailsUser && (
+                  <div>
+                    <p>
+                      <strong>Phone:</strong> {detailsUser.userPhone}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {detailsUser.userEmail}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

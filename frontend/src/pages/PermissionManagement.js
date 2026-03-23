@@ -173,201 +173,205 @@ function PermissionManagement() {
 
   /* ================= UI ================= */
   return (
-    <div className="container mt-3">
-      {/* Back */}
-      <div className="row mb-3">
-        <div className="col">
-          <i
-            className="fa fa-arrow-left mt-2"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/dashboard")}
-          ></i>
+    <section className="poppins-regular py-3">
+      <div className="container">
+        {/* Back */}
+        <div className="row mb-3">
+          <div className="col">
+            <i
+              className="fa fa-arrow-left mt-2"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/dashboard")}
+            ></i>
+          </div>
         </div>
-      </div>
 
-      {/* Header */}
-      <div className="row g-3 mb-3">
-        <div className="col-md-10 col-6">
-          <h4 className="fw-bold mb-0">Permissions</h4>
-        </div>
-        <div className="col-md-2 col-6 text-end">
-          <button className="btn btn-primary btn-sm" onClick={openAddModal}>
-            + Add Permission
-          </button>
-        </div>
-      </div>
-
-      {/* Search */}
-      <div className="row g-3 mb-3">
-        <div className="col-md-6">
-          <input
-            type="text"
-            name="search"
-            className="form-control form-control-sm"
-            placeholder="Search Permission Key"
-            value={filters.search}
-            onChange={handleFilterChange}
-          />
-        </div>
-      </div>
-
-      {/* Applied Filters */}
-      {filters.search && (
+        {/* Header */}
         <div className="row g-3 mb-3">
-          <div className="col-auto">
-            <span className="fw-semibold">Filters applied:</span>
+          <div className="col-md-10 col-6">
+            <h4 className="fw-bold mb-0">Permissions</h4>
           </div>
-
-          <div className="col-auto">
-            <span className="badge bg-secondary">
-              Search: {filters.search}
-              <i
-                className="fa fa-times ms-1"
-                style={{ cursor: "pointer" }}
-                onClick={() => setFilters((prev) => ({ ...prev, search: "" }))}
-              ></i>
-            </span>
+          <div className="col-md-2 col-6 text-end">
+            <button className="btn btn-primary btn-sm" onClick={openAddModal}>
+              + Add Permission
+            </button>
           </div>
         </div>
-      )}
 
-      {/* Table */}
-      <div className="card border-0 mb-3">
-        <div className="card-body p-0">
-          {loading ? (
-            <div className="text-center p-3">Loading...</div>
-          ) : (
-            <div className="table-responsive rounded">
-              <table className="table table-striped table-hover align-middle mb-0 small">
-                <thead className="table-dark">
-                  <tr>
-                    <th>ID</th>
-                    <th>Permission Key</th>
-                    <th>Date & Time</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentPermissions.map((permission) => (
-                    <tr key={permission.id}>
-                      <td style={{ minWidth: "50px" }}>{permission.id}</td>
-                      <td style={{ minWidth: "140px" }}>{permission.key}</td>
-                      <td style={{ minWidth: "250px" }}>
-                        <div className="d-flex flex-column">
-                          <small>
-                            <span className="fw-semibold text-muted">
-                              Created:
-                            </span>{" "}
-                            {dayjs(permission.createdAt).format(
-                              "DD MMM YYYY, hh:mm A",
-                            )}
-                          </small>
-                          <small>
-                            <span className="fw-semibold text-muted">
-                              Updated:
-                            </span>{" "}
-                            {dayjs(permission.updatedAt).format(
-                              "DD MMM YYYY, hh:mm A",
-                            )}
-                          </small>
-                        </div>
-                      </td>
-                      <td style={{ minWidth: "70px", fontSize: "15px" }}>
-                        <i
-                          className="fa-solid fa-pen-to-square text-primary me-3"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => openEditModal(permission)}
-                        ></i>
+        {/* Search */}
+        <div className="row g-3 mb-3">
+          <div className="col-md-6">
+            <input
+              type="text"
+              name="search"
+              className="form-control form-control-sm"
+              placeholder="Search Permission Key"
+              value={filters.search}
+              onChange={handleFilterChange}
+            />
+          </div>
+        </div>
 
-                        <i
-                          className="fa-solid fa-trash text-danger"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleDelete(permission.id)}
-                        ></i>
-                      </td>
+        {/* Applied Filters */}
+        {filters.search && (
+          <div className="row g-3 mb-3">
+            <div className="col-auto">
+              <span className="fw-semibold">Filters applied:</span>
+            </div>
+
+            <div className="col-auto">
+              <span className="badge bg-secondary">
+                Search: {filters.search}
+                <i
+                  className="fa fa-times ms-1"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    setFilters((prev) => ({ ...prev, search: "" }))
+                  }
+                ></i>
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Table */}
+        <div className="card border-0 mb-3">
+          <div className="card-body p-0">
+            {loading ? (
+              <div className="text-center p-3">Loading...</div>
+            ) : (
+              <div className="table-responsive rounded">
+                <table className="table table-striped table-hover align-middle mb-0 small">
+                  <thead className="table-dark">
+                    <tr>
+                      <th>ID</th>
+                      <th>Permission Key</th>
+                      <th>Date & Time</th>
+                      <th>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody>
+                    {currentPermissions.map((permission) => (
+                      <tr key={permission.id}>
+                        <td style={{ minWidth: "50px" }}>{permission.id}</td>
+                        <td style={{ minWidth: "140px" }}>{permission.key}</td>
+                        <td style={{ minWidth: "250px" }}>
+                          <div className="d-flex flex-column">
+                            <small>
+                              <span className="fw-semibold text-muted">
+                                Created:
+                              </span>{" "}
+                              {dayjs(permission.createdAt).format(
+                                "DD MMM YYYY, hh:mm A",
+                              )}
+                            </small>
+                            <small>
+                              <span className="fw-semibold text-muted">
+                                Updated:
+                              </span>{" "}
+                              {dayjs(permission.updatedAt).format(
+                                "DD MMM YYYY, hh:mm A",
+                              )}
+                            </small>
+                          </div>
+                        </td>
+                        <td style={{ minWidth: "70px", fontSize: "15px" }}>
+                          <i
+                            className="fa-solid fa-pen-to-square text-primary me-3"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => openEditModal(permission)}
+                          ></i>
+
+                          <i
+                            className="fa-solid fa-trash text-danger"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleDelete(permission.id)}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* Pagination */}
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          Page {currentPage} of {totalPages} • {filteredPermissions.length}{" "}
-          records
+        {/* Pagination */}
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            Page {currentPage} of {totalPages} • {filteredPermissions.length}{" "}
+            records
+          </div>
+          <div>
+            <button
+              className="btn btn-sm border-0"
+              disabled={currentPage === 1}
+              onClick={goToPreviousPage}
+            >
+              <i className="fa-solid fa-chevron-left"></i>
+            </button>
+            <button
+              className="btn btn-sm border-0"
+              disabled={currentPage === totalPages || totalPages === 0}
+              onClick={goToNextPage}
+            >
+              <i className="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
         </div>
-        <div>
-          <button
-            className="btn btn-sm border-0"
-            disabled={currentPage === 1}
-            onClick={goToPreviousPage}
-          >
-            <i className="fa-solid fa-chevron-left"></i>
-          </button>
-          <button
-            className="btn btn-sm border-0"
-            disabled={currentPage === totalPages || totalPages === 0}
-            onClick={goToNextPage}
-          >
-            <i className="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
 
-      {/* Modal */}
-      <div className="modal fade" id="permissionModal" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content border-0">
-            <div className="modal-header">
-              <h5 className="modal-title">
-                {formData.id ? "Edit Permission" : "Add Permission"}
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
+        {/* Modal */}
+        <div className="modal fade" id="permissionModal" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content border-0">
+              <div className="modal-header">
+                <h5 className="modal-title">
+                  {formData.id ? "Edit Permission" : "Add Permission"}
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
 
-            <div className="modal-body">
-              <label className="form-label small text-muted">
-                Permission Key <span className="text-danger">*</span>
-              </label>
-              <input
-                type="text"
-                name="key"
-                className="form-control form-control-sm"
-                value={formData.key}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+              <div className="modal-body">
+                <label className="form-label small text-muted">
+                  Permission Key <span className="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="key"
+                  className="form-control form-control-sm"
+                  value={formData.key}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
 
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-sm btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancel
-              </button>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
 
-              <button
-                type="button"
-                className="btn btn-sm btn-primary"
-                onClick={handleSubmit}
-              >
-                {formData.id ? "Update Permission" : "Create Permission"}
-              </button>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-primary"
+                  onClick={handleSubmit}
+                >
+                  {formData.id ? "Update Permission" : "Create Permission"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

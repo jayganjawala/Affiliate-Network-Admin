@@ -245,318 +245,430 @@ function UserManagement() {
 
   /* ================= UI ================= */
   return (
-    <div className="container mt-3">
-      <div className="row mb-3">
-        <div className="col">
-          <i
-            className="fa fa-arrow-left mt-2"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/dashboard")}
-          ></i>
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <div className="col">
-          <h4 className="fw-bold mb-0">User Management</h4>
-        </div>
-      </div>
-
-      {/* ================= FILTERS ================= */}
-      <div className="row g-3 mb-3">
-        <div className="col-md-4 col-6">
-          <input
-            type="text"
-            name="userSearch"
-            className="form-control form-control-sm"
-            placeholder="Search User (Name, Phone, Email)"
-            value={filters.userSearch}
-            onChange={handleFilterChange}
-            // disabled={!canSearchUser}
-          />
+    <section className="poppins-regular py-3">
+      <div className="container">
+        <div className="row mb-3">
+          <div className="col">
+            <i
+              className="fa fa-arrow-left mt-2"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/dashboard")}
+            ></i>
+          </div>
         </div>
 
-        <div className="col-md-4 col-6">
-          <input
-            type="text"
-            name="employeeSearch"
-            className="form-control form-control-sm"
-            placeholder="Search Employee (Name, Phone, Email)"
-            value={filters.employeeSearch}
-            onChange={handleFilterChange}
-          />
+        <div className="row mb-3">
+          <div className="col">
+            <h4 className="fw-bold mb-0">User Management</h4>
+          </div>
         </div>
 
-        <div className="col-md-4 col-12">
-          <select
-            name="status"
-            className="form-select form-select-sm"
-            value={filters.status}
-            onChange={handleFilterChange}
-          >
-            <option value="">Status</option>
-            <option value="Client">Client ({clientCount})</option>
-            <option value="Lead">Lead ({leadCount})</option>
-          </select>
-        </div>
-      </div>
-
-      {/* ================= APPLIED FILTERS ================= */}
-      {(filters.userSearch || filters.employeeSearch || filters.status) && (
+        {/* ================= FILTERS ================= */}
         <div className="row g-3 mb-3">
-          <div className="col-auto">
-            <span className="fw-semibold">Filters applied:</span>
+          <div className="col-md-4 col-6">
+            <input
+              type="text"
+              name="userSearch"
+              className="form-control form-control-sm"
+              placeholder="Search User (Name, Phone, Email)"
+              value={filters.userSearch}
+              onChange={handleFilterChange}
+              // disabled={!canSearchUser}
+            />
           </div>
 
-          {filters.userSearch && (
-            <div className="col-auto">
-              <span className="badge bg-secondary">
-                User: {filters.userSearch}{" "}
-                <i
-                  className="fa fa-times ms-1"
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    setFilters((prev) => ({ ...prev, userSearch: "" }))
-                  }
-                ></i>
-              </span>
-            </div>
-          )}
+          <div className="col-md-4 col-6">
+            <input
+              type="text"
+              name="employeeSearch"
+              className="form-control form-control-sm"
+              placeholder="Search Employee (Name, Phone, Email)"
+              value={filters.employeeSearch}
+              onChange={handleFilterChange}
+            />
+          </div>
 
-          {filters.employeeSearch && (
-            <div className="col-auto">
-              <span className="badge bg-secondary">
-                Employee: {filters.employeeSearch}{" "}
-                <i
-                  className="fa fa-times ms-1"
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    setFilters((prev) => ({ ...prev, employeeSearch: "" }))
-                  }
-                ></i>
-              </span>
-            </div>
-          )}
-
-          {filters.status && (
-            <div className="col-auto">
-              <span className="badge bg-secondary">
-                Status: {filters.status}{" "}
-                <i
-                  className="fa fa-times ms-1"
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    setFilters((prev) => ({ ...prev, status: "" }))
-                  }
-                ></i>
-              </span>
-            </div>
-          )}
+          <div className="col-md-4 col-12">
+            <select
+              name="status"
+              className="form-select form-select-sm"
+              value={filters.status}
+              onChange={handleFilterChange}
+            >
+              <option value="">Status</option>
+              <option value="Client">Client ({clientCount})</option>
+              <option value="Lead">Lead ({leadCount})</option>
+            </select>
+          </div>
         </div>
-      )}
 
-      <div className="card mb-3">
-        <div className="card border-0">
-          {loading ? (
-            <div className="text-center">Loading...</div>
-          ) : (
-            <div className="table-responsive rounded">
-              <table className="table table-striped table-hover align-middle mb-0 small">
-                <thead className="table-dark">
-                  <tr>
-                    <th>ID</th>
-                    {/* <th>Prefix</th> */}
-                    <th>Name</th>
-                    <th>RelEmp</th>
-                    {/* <th>Phone</th>
+        {/* ================= APPLIED FILTERS ================= */}
+        {(filters.userSearch || filters.employeeSearch || filters.status) && (
+          <div className="row g-3 mb-3">
+            <div className="col-auto">
+              <span className="fw-semibold">Filters applied:</span>
+            </div>
+
+            {filters.userSearch && (
+              <div className="col-auto">
+                <span className="badge bg-secondary">
+                  User: {filters.userSearch}{" "}
+                  <i
+                    className="fa fa-times ms-1"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      setFilters((prev) => ({ ...prev, userSearch: "" }))
+                    }
+                  ></i>
+                </span>
+              </div>
+            )}
+
+            {filters.employeeSearch && (
+              <div className="col-auto">
+                <span className="badge bg-secondary">
+                  Employee: {filters.employeeSearch}{" "}
+                  <i
+                    className="fa fa-times ms-1"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      setFilters((prev) => ({ ...prev, employeeSearch: "" }))
+                    }
+                  ></i>
+                </span>
+              </div>
+            )}
+
+            {filters.status && (
+              <div className="col-auto">
+                <span className="badge bg-secondary">
+                  Status: {filters.status}{" "}
+                  <i
+                    className="fa fa-times ms-1"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      setFilters((prev) => ({ ...prev, status: "" }))
+                    }
+                  ></i>
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="card mb-3">
+          <div className="card border-0">
+            {loading ? (
+              <div className="text-center">Loading...</div>
+            ) : (
+              <div className="table-responsive rounded">
+                <table className="table table-striped table-hover align-middle mb-0 small">
+                  <thead className="table-dark">
+                    <tr>
+                      <th>ID</th>
+                      {/* <th>Prefix</th> */}
+                      <th>Name</th>
+                      <th>RelEmp</th>
+                      {/* <th>Phone</th>
                     <th>Email</th> */}
-                    {/* Merged Phone and Email columns */}
-                    <th>Contact Details</th>
-                    <th>Status</th>
-                    <th>Source</th>
-                    {/* <th>Created At</th>
+                      {/* Merged Phone and Email columns */}
+                      <th>Contact Details</th>
+                      <th>Status</th>
+                      <th>Source</th>
+                      {/* <th>Created At</th>
                     <th>Updated At</th> */}
-                    <th>Date & Time</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentUsers.map((user) => (
-                    <tr
-                      key={user.id}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => navigate(`/users/${user.id}`)}
-                    >
-                      <td style={{ minWidth: "50px" }}>{user.id}</td>
+                      <th>Date & Time</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentUsers.map((user) => (
+                      <tr
+                        key={user.id}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate(`/users/${user.id}`)}
+                      >
+                        <td style={{ minWidth: "50px" }}>{user.id}</td>
 
-                      {/* <td>{user.prefix}</td> */}
-                      {/* <td>{user.fullName}</td> */}
-                      <td
-                        style={{ minWidth: "180px" }}
-                      >{`${user.prefix} ${user.fullName}`}</td>
-                      <td style={{ minWidth: "180px" }}>
-                        {user.employeeId ? (
+                        {/* <td>{user.prefix}</td> */}
+                        {/* <td>{user.fullName}</td> */}
+                        <td
+                          style={{ minWidth: "180px" }}
+                        >{`${user.prefix} ${user.fullName}`}</td>
+                        <td style={{ minWidth: "180px" }}>
+                          {user.employeeId ? (
+                            <i
+                              className="fa-solid fa-user text-info me-1"
+                              style={{ cursor: "pointer" }}
+                              title="View Employee"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openEmployeeModal(user);
+                              }}
+                            ></i>
+                          ) : (
+                            <span className="text-muted">-</span>
+                          )}
+                          <span>{user.employeeName}</span>
+                        </td>
+                        {/* <td>{user.phone}</td>
+                      <td>{user.email}</td> */}
+                        <td style={{ minWidth: "130px", fontSize: "15px" }}>
                           <i
-                            className="fa-solid fa-user text-info me-1"
+                            className="fa-solid fa-phone text-success me-2"
                             style={{ cursor: "pointer" }}
-                            title="View Employee"
+                            title="Copy Phone"
                             onClick={(e) => {
                               e.stopPropagation();
-                              openEmployeeModal(user);
+                              handleCopy(user.phone, "Phone number");
                             }}
                           ></i>
-                        ) : (
-                          <span className="text-muted">-</span>
-                        )}
-                        <span>{user.employeeName}</span>
-                      </td>
-                      {/* <td>{user.phone}</td>
-                      <td>{user.email}</td> */}
-                      <td style={{ minWidth: "130px", fontSize: "15px" }}>
-                        <i
-                          className="fa-solid fa-phone text-success me-2"
-                          style={{ cursor: "pointer" }}
-                          title="Copy Phone"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleCopy(user.phone, "Phone number");
-                          }}
-                        ></i>
-                        <i
-                          className="fa-solid fa-envelope text-primary me-2"
-                          style={{ cursor: "pointer" }}
-                          title="Copy Email"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleCopy(user.email, "Email");
-                          }}
-                        ></i>
-                        <i
-                          className="fa-solid fa-id-card text-secondary"
-                          style={{ cursor: "pointer" }}
-                          title="View Details"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openDetailsModal(user);
-                          }}
-                        ></i>
-                      </td>
-                      <td style={{ minWidth: "100px" }}>
-                        <span
-                          className={`badge ${
-                            user.status?.toLowerCase() === "client"
-                              ? "bg-success"
-                              : "bg-secondary"
-                          }`}
-                        >
-                          {user.status}
-                        </span>
-                      </td>
-                      <td style={{ minWidth: "100px" }}>{user.source}</td>
-                      {/* <td>{new Date(user.createdAt).toLocaleString()}</td>
+                          <i
+                            className="fa-solid fa-envelope text-primary me-2"
+                            style={{ cursor: "pointer" }}
+                            title="Copy Email"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCopy(user.email, "Email");
+                            }}
+                          ></i>
+                          <i
+                            className="fa-solid fa-id-card text-secondary"
+                            style={{ cursor: "pointer" }}
+                            title="View Details"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openDetailsModal(user);
+                            }}
+                          ></i>
+                        </td>
+                        <td style={{ minWidth: "100px" }}>
+                          <span
+                            className={`badge ${
+                              user.status?.toLowerCase() === "client"
+                                ? "bg-success"
+                                : "bg-secondary"
+                            }`}
+                          >
+                            {user.status}
+                          </span>
+                        </td>
+                        <td style={{ minWidth: "100px" }}>{user.source}</td>
+                        {/* <td>{new Date(user.createdAt).toLocaleString()}</td>
                       <td>{new Date(user.updatedAt).toLocaleString()}</td> */}
-                      <td style={{ minWidth: "240px" }}>
-                        <div className="d-flex flex-column">
-                          <small>
-                            {/* <i className="fa-solid fa-arrow-down text-success me-1"></i> */}
-                            <span className="fw-semibold text-muted">
-                              Created:{" "}
-                            </span>
-                            {dayjs(user.createdAt).format(
-                              "DD MMM YYYY, hh:mm A",
-                            )}
-                          </small>
-                          <small>
-                            {/* <i className="fa-solid fa-arrow-up text-primary me-1"></i> */}
-                            <span className="fw-semibold text-muted">
-                              Updated:{" "}
-                            </span>
-                            {dayjs(user.updatedAt).format(
-                              "DD MMM YYYY, hh:mm A",
-                            )}
-                          </small>
-                        </div>
-                      </td>
-                      <td style={{ minWidth: "70px", fontSize: "15px" }}>
-                        <i
-                          className={`fa-solid fa-pen-to-square me-3 ${
-                            canEditUser ? "text-primary" : "text-muted"
-                          }`}
-                          style={{
-                            cursor: "pointer",
-                            opacity: canEditUser ? 1 : 0.5,
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (!canEditUser) {
-                              toast.error("You don't have authority");
-                              return;
-                            }
-                            handleEdit(user);
-                          }}
-                          title={canEditUser ? "Edit User" : "No permission"}
-                        ></i>
+                        <td style={{ minWidth: "240px" }}>
+                          <div className="d-flex flex-column">
+                            <small>
+                              {/* <i className="fa-solid fa-arrow-down text-success me-1"></i> */}
+                              <span className="fw-semibold text-muted">
+                                Created:{" "}
+                              </span>
+                              {dayjs(user.createdAt).format(
+                                "DD MMM YYYY, hh:mm A",
+                              )}
+                            </small>
+                            <small>
+                              {/* <i className="fa-solid fa-arrow-up text-primary me-1"></i> */}
+                              <span className="fw-semibold text-muted">
+                                Updated:{" "}
+                              </span>
+                              {dayjs(user.updatedAt).format(
+                                "DD MMM YYYY, hh:mm A",
+                              )}
+                            </small>
+                          </div>
+                        </td>
+                        <td style={{ minWidth: "70px", fontSize: "15px" }}>
+                          <i
+                            className={`fa-solid fa-pen-to-square me-3 ${
+                              canEditUser ? "text-primary" : "text-muted"
+                            }`}
+                            style={{
+                              cursor: "pointer",
+                              opacity: canEditUser ? 1 : 0.5,
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (!canEditUser) {
+                                toast.error("You don't have authority");
+                                return;
+                              }
+                              handleEdit(user);
+                            }}
+                            title={canEditUser ? "Edit User" : "No permission"}
+                          ></i>
 
-                        <i
-                          className={`fa-solid fa-trash ${
-                            canDeleteUser ? "text-danger" : "text-muted"
-                          }`}
-                          style={{
-                            cursor: "pointer",
-                            opacity: canDeleteUser ? 1 : 0.5,
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (!canDeleteUser) {
-                              toast.error("You don't have authority");
-                              return;
+                          <i
+                            className={`fa-solid fa-trash ${
+                              canDeleteUser ? "text-danger" : "text-muted"
+                            }`}
+                            style={{
+                              cursor: "pointer",
+                              opacity: canDeleteUser ? 1 : 0.5,
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (!canDeleteUser) {
+                                toast.error("You don't have authority");
+                                return;
+                              }
+                              handleDelete(user.id);
+                            }}
+                            title={
+                              canDeleteUser ? "Delete User" : "No permission"
                             }
-                            handleDelete(user.id);
-                          }}
-                          title={
-                            canDeleteUser ? "Delete User" : "No permission"
-                          }
-                        ></i>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                          ></i>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ================= PAGINATION CONTROLS ================= */}
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            Page {currentPage} of {totalPages} • {filteredUsers.length} records
+          </div>
+          <div>
+            <button
+              className="btn btn-sm border-0"
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+            >
+              <i className="fa-solid fa-chevron-left"></i>
+            </button>
+            <button
+              className="btn btn-sm border-0"
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages || totalPages === 0}
+            >
+              <i className="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        {/* ================= EDIT MODAL ================= */}
+        <div className="modal fade" id="editUserModal" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <form onSubmit={handleSubmit}>
+                <div className="modal-header">
+                  <h5 className="modal-title">Edit User</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                  ></button>
+                </div>
+
+                <div className="modal-body">
+                  <div className="mb-3">
+                    <label className="form-label small text-muted">
+                      Prefix <span className="text-danger">*</span>
+                    </label>
+                    <select
+                      name="prefix"
+                      className="form-select form-select-sm"
+                      value={formData.prefix}
+                      onChange={handleInputChange}
+                    >
+                      <option value="Mr">Mr</option>
+                      <option value="Mrs">Mrs</option>
+                      <option value="Miss">Miss</option>
+                    </select>
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label small text-muted">
+                      Full Name <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      className="form-control form-control-sm"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label small text-muted">
+                      Phone <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="phone"
+                      className="form-control form-control-sm"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label small text-muted">
+                      Email <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      className="form-control form-control-sm"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label small text-muted">
+                      Status <span className="text-danger">*</span>
+                    </label>
+                    <select
+                      name="status"
+                      className="form-select form-select-sm"
+                      value={formData.status}
+                      onChange={handleInputChange}
+                    >
+                      <option value="Client">Client</option>
+                      <option value="Lead">Lead</option>
+                    </select>
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label small text-muted">
+                      Source <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="source"
+                      className="form-control form-control-sm"
+                      value={formData.source}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="modal-footer">
+                  <button type="submit" className="btn btn-sm btn-primary">
+                    Update
+                  </button>
+                </div>
+              </form>
             </div>
-          )}
+          </div>
         </div>
-      </div>
 
-      {/* ================= PAGINATION CONTROLS ================= */}
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          Page {currentPage} of {totalPages} • {filteredUsers.length} records
-        </div>
-        <div>
-          <button
-            className="btn btn-sm border-0"
-            onClick={goToPreviousPage}
-            disabled={currentPage === 1}
-          >
-            <i className="fa-solid fa-chevron-left"></i>
-          </button>
-          <button
-            className="btn btn-sm border-0"
-            onClick={goToNextPage}
-            disabled={currentPage === totalPages || totalPages === 0}
-          >
-            <i className="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-
-      {/* ================= EDIT MODAL ================= */}
-      <div className="modal fade" id="editUserModal" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <form onSubmit={handleSubmit}>
+        {/* ================= Phone and Email Display Model ================= */}
+        <div className="modal fade" id="detailsModal" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Edit User</h5>
+                <h5 className="modal-title">Contact Details</h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -565,210 +677,100 @@ function UserManagement() {
               </div>
 
               <div className="modal-body">
-                <div className="mb-3">
-                  <label className="form-label small text-muted">
-                    Prefix <span className="text-danger">*</span>
-                  </label>
-                  <select
-                    name="prefix"
-                    className="form-select form-select-sm"
-                    value={formData.prefix}
-                    onChange={handleInputChange}
-                  >
-                    <option value="Mr">Mr</option>
-                    <option value="Mrs">Mrs</option>
-                    <option value="Miss">Miss</option>
-                  </select>
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label small text-muted">
-                    Full Name <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    className="form-control form-control-sm"
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label small text-muted">
-                    Phone <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="phone"
-                    className="form-control form-control-sm"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label small text-muted">
-                    Email <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    className="form-control form-control-sm"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label small text-muted">
-                    Status <span className="text-danger">*</span>
-                  </label>
-                  <select
-                    name="status"
-                    className="form-select form-select-sm"
-                    value={formData.status}
-                    onChange={handleInputChange}
-                  >
-                    <option value="Client">Client</option>
-                    <option value="Lead">Lead</option>
-                  </select>
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label small text-muted">
-                    Source <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="source"
-                    className="form-control form-control-sm"
-                    value={formData.source}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="modal-footer">
-                <button type="submit" className="btn btn-sm btn-primary">
-                  Update
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      {/* ================= Phone and Email Display Model ================= */}
-      <div className="modal fade" id="detailsModal" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Contact Details</h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-
-            <div className="modal-body">
-              {detailsUser && (
-                <div>
-                  <p>
-                    <strong>Phone:</strong> {detailsUser.phone}
-                    {/* <i
+                {detailsUser && (
+                  <div>
+                    <p>
+                      <strong>Phone:</strong> {detailsUser.phone}
+                      {/* <i
                       className="fa-solid fa-copy ms-2"
                       style={{ cursor: "pointer" }}
                       onClick={() =>
                         handleCopy(detailsUser.phone, "Phone number")
                       }
                     ></i> */}
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {detailsUser.email}
-                    {/* <i
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {detailsUser.email}
+                      {/* <i
                       className="fa-solid fa-copy ms-2"
                       style={{ cursor: "pointer" }}
                       onClick={() => handleCopy(detailsUser.email, "Email")}
                     ></i> */}
-                  </p>
-                </div>
-              )}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* ================= Employee Details ================= */}
-      <div className="modal fade" id="employeeModal" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Employee Details</h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div className="modal-body">
-              {employeeDetails ? (
-                <div>
-                  <p>
-                    <strong>ID:</strong> {employeeDetails.employeeId}
-                  </p>
-                  <p>
-                    <strong>Name:</strong> {employeeDetails.employeeName}
-                    <i
-                      className="fa-solid fa-copy ms-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        handleCopy(
-                          employeeDetails.employeeName,
-                          "Employee Name",
-                        )
-                      }
-                    ></i>
-                  </p>
-                  <p>
-                    <strong>Phone:</strong> {employeeDetails.employeePhone}
-                    <i
-                      className="fa-solid fa-copy ms-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        handleCopy(
-                          employeeDetails.employeePhone,
-                          "Employee Phone Number",
-                        )
-                      }
-                    ></i>
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {employeeDetails.employeeEmail}
-                    <i
-                      className="fa-solid fa-copy ms-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        handleCopy(
-                          employeeDetails.employeeEmail,
-                          "Employee Email Id",
-                        )
-                      }
-                    ></i>
-                  </p>
-                </div>
-              ) : (
-                <p>No employee assigned</p>
-              )}
+        {/* ================= Employee Details ================= */}
+        <div className="modal fade" id="employeeModal" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Employee Details</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
+              <div className="modal-body">
+                {employeeDetails ? (
+                  <div>
+                    <p>
+                      <strong>ID:</strong> {employeeDetails.employeeId}
+                    </p>
+                    <p>
+                      <strong>Name:</strong> {employeeDetails.employeeName}
+                      <i
+                        className="fa-solid fa-copy ms-2"
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          handleCopy(
+                            employeeDetails.employeeName,
+                            "Employee Name",
+                          )
+                        }
+                      ></i>
+                    </p>
+                    <p>
+                      <strong>Phone:</strong> {employeeDetails.employeePhone}
+                      <i
+                        className="fa-solid fa-copy ms-2"
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          handleCopy(
+                            employeeDetails.employeePhone,
+                            "Employee Phone Number",
+                          )
+                        }
+                      ></i>
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {employeeDetails.employeeEmail}
+                      <i
+                        className="fa-solid fa-copy ms-2"
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          handleCopy(
+                            employeeDetails.employeeEmail,
+                            "Employee Email Id",
+                          )
+                        }
+                      ></i>
+                    </p>
+                  </div>
+                ) : (
+                  <p>No employee assigned</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

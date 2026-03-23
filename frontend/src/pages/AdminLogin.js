@@ -129,118 +129,122 @@ function AdminLogin({ setAuth, setPermissions }) {
   };
 
   return (
-    <div className="container bg-light d-flex align-items-center justify-content-center min-vh-100">
-      <div className="row w-100 justify-content-center">
-        <div className="col-12 col-sm-8 col-lg-5">
-          <div className="card shadow-lg border-0 rounded">
-            <div className="card-body p-lg-5">
-              <div className="text-center mb-4">
-                {/* <img
+    <section className="poppins-regular">
+      <div className="container bg-light d-flex align-items-center justify-content-center min-vh-100">
+        <div className="row w-100 justify-content-center">
+          <div className="col-12 col-sm-8 col-lg-5">
+            <div className="card shadow-lg border-0 rounded">
+              <div className="card-body p-lg-5">
+                <div className="text-center mb-4">
+                  {/* <img
                   src="logo.png"
                   alt="Logo"
                   className="img-fluid mb-4"
                   style={{ maxWidth: "220px" }}
                 /> */}
-                <img src="JD.svg" className="img-fluid mb-4" alt="logo" />
-                <h4 className="fw-bold text-dark">
-                  {otpSent ? "Verify OTP" : "Admin Login"}
-                </h4>
-                <p className="text-muted small">
-                  {otpSent
-                    ? "Enter the 6-digit code sent to your phone"
-                    : "Login using your registered mobile number"}
-                </p>
-              </div>
+                  <img src="JD.svg" className="img-fluid mb-4" alt="logo" />
+                  <h4 className="fw-bold text-dark">
+                    {otpSent ? "Verify OTP" : "Admin Login"}
+                  </h4>
+                  <p className="text-muted small">
+                    {otpSent
+                      ? "Enter the 6-digit code sent to your phone"
+                      : "Login using your registered mobile number"}
+                  </p>
+                </div>
 
-              {!otpSent ? (
-                <form onSubmit={handleSendOtp}>
-                  <div className="mb-3">
-                    <label className="form-label fw-semibold">
-                      Phone Number
-                    </label>
-                    <div className="input-group">
-                      <span className="input-group-text">+91</span>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={phoneNumber}
-                        onChange={(e) =>
-                          setPhoneNumber(e.target.value.replace(/[^0-9]/g, ""))
-                        }
-                        placeholder="Enter 10-digit number"
-                        maxLength={10}
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="btn btn-success w-100 fw-semibold"
-                    disabled={loading}
-                  >
-                    {loading ? "Sending OTP..." : "Send OTP"}
-                  </button>
-                </form>
-              ) : (
-                <form onSubmit={handleVerifyOtp}>
-                  <div className="mb-4">
-                    <label className="form-label fw-semibold d-block mb-3">
-                      Enter OTP
-                    </label>
-
-                    <div
-                      className="d-flex justify-content-between gap-2"
-                      onPaste={handlePaste}
-                    >
-                      {otp.map((data, index) => (
+                {!otpSent ? (
+                  <form onSubmit={handleSendOtp}>
+                    <div className="mb-3">
+                      <label className="form-label fw-semibold">
+                        Phone Number
+                      </label>
+                      <div className="input-group">
+                        <span className="input-group-text">+91</span>
                         <input
-                          key={index}
                           type="text"
-                          maxLength="1"
-                          className="form-control text-center fs-4"
-                          style={{ width: "45px", height: "55px" }}
-                          value={data}
-                          onChange={(e) => handleChange(e.target, index)}
-                          onKeyDown={(e) => handleKeyDown(e, index)}
-                          ref={(el) => (inputRefs.current[index] = el)}
+                          className="form-control"
+                          value={phoneNumber}
+                          onChange={(e) =>
+                            setPhoneNumber(
+                              e.target.value.replace(/[^0-9]/g, ""),
+                            )
+                          }
+                          placeholder="Enter 10-digit number"
+                          maxLength={10}
+                          required
                         />
-                      ))}
+                      </div>
                     </div>
-                  </div>
 
-                  <button
-                    type="submit"
-                    className="btn btn-success w-100 fw-semibold"
-                    disabled={loading}
-                  >
-                    {loading ? "Verifying..." : "Verify OTP"}
-                  </button>
-
-                  <div className="text-center mt-3">
-                    <span className="text-muted small">
-                      Didn’t receive OTP?{" "}
-                    </span>
                     <button
-                      type="button"
-                      className="btn btn-link btn-sm text-decoration-none"
-                      onClick={handleSendOtp}
+                      type="submit"
+                      className="btn btn-success w-100 fw-semibold"
                       disabled={loading}
                     >
-                      Resend OTP
+                      {loading ? "Sending OTP..." : "Send OTP"}
                     </button>
-                  </div>
-                </form>
-              )}
-            </div>
-          </div>
+                  </form>
+                ) : (
+                  <form onSubmit={handleVerifyOtp}>
+                    <div className="mb-4">
+                      <label className="form-label fw-semibold d-block mb-3">
+                        Enter OTP
+                      </label>
 
-          <p className="text-center text-muted small mt-3 mb-0">
-            © {new Date().getFullYear()} EquityPandit Advisor
-          </p>
+                      <div
+                        className="d-flex justify-content-between gap-2"
+                        onPaste={handlePaste}
+                      >
+                        {otp.map((data, index) => (
+                          <input
+                            key={index}
+                            type="text"
+                            maxLength="1"
+                            className="form-control text-center fs-4"
+                            style={{ width: "45px", height: "55px" }}
+                            value={data}
+                            onChange={(e) => handleChange(e.target, index)}
+                            onKeyDown={(e) => handleKeyDown(e, index)}
+                            ref={(el) => (inputRefs.current[index] = el)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="btn btn-success w-100 fw-semibold"
+                      disabled={loading}
+                    >
+                      {loading ? "Verifying..." : "Verify OTP"}
+                    </button>
+
+                    <div className="text-center mt-3">
+                      <span className="text-muted small">
+                        Didn’t receive OTP?{" "}
+                      </span>
+                      <button
+                        type="button"
+                        className="btn btn-link btn-sm text-decoration-none"
+                        onClick={handleSendOtp}
+                        disabled={loading}
+                      >
+                        Resend OTP
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </div>
+
+            <p className="text-center text-muted small mt-3 mb-0">
+              © {new Date().getFullYear()} EquityPandit Advisor
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

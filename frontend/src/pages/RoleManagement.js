@@ -264,165 +264,218 @@ function RoleManagement() {
 
   /* ================= UI ================= */
   return (
-    <div className="container mt-3">
-      {/* Header */}
-      <div className="row mb-3">
-        <div className="col">
-          <i
-            className="fa fa-arrow-left mt-2"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/dashboard")}
-          ></i>
-        </div>
-      </div>
-
-      <div className="row g-3 mb-3">
-        <div className="col-md-10 col-7">
-          <h4 className="fw-bold mb-0">Roles</h4>
-        </div>
-        <div className="col-md-2 col-5 text-end">
-          <button className="btn btn-primary btn-sm" onClick={openAddModal}>
-            + Add Role
-          </button>
-        </div>
-      </div>
-
-      {/* FILTER */}
-      <div className="row g-3 mb-3">
-        <div className="col-md-6 col-12">
-          <input
-            type="text"
-            name="search"
-            className="form-control form-control-sm"
-            placeholder="Search Role (Name, Description)"
-            value={filters.search}
-            onChange={handleFilterChange}
-          />
-        </div>
-      </div>
-
-      {/* APPLIED FILTER */}
-      {filters.search && (
-        <div className="row g-3 mb-3">
-          <div className="col-auto">
-            <span className="badge bg-secondary">
-              Search: {filters.search}
-              <i
-                className="fa fa-times ms-1"
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setFilters({ search: "" });
-                  setCurrentPage(1);
-                }}
-              ></i>
-            </span>
+    <section className="poppins-regular py-3">
+      <div className="container">
+        {/* Header */}
+        <div className="row mb-3">
+          <div className="col">
+            <i
+              className="fa fa-arrow-left mt-2"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/dashboard")}
+            ></i>
           </div>
         </div>
-      )}
 
-      {/* TABLE */}
-      <div className="card border-0 mb-3">
-        <div className="card-body p-0">
-          {loading ? (
-            <div className="text-center p-3">Loading...</div>
-          ) : (
-            <div className="table-responsive rounded">
-              <table className="table table-striped table-hover align-middle mb-0 small">
-                <thead className="table-dark">
-                  <tr>
-                    <th>ID</th>
-                    <th>Role Name</th>
-                    <th>Description</th>
-                    <th>Date & Time</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentRoles.map((role) => (
-                    <tr key={role.id}>
-                      <td style={{ minWidth: "50px" }}>{role.id}</td>
-                      <td style={{ minWidth: "120px" }}>{role.name}</td>
-                      <td style={{ minWidth: "280px" }}>{role.description}</td>
-                      <td style={{ minWidth: "250px" }}>
-                        <div className="d-flex flex-column">
-                          <small>
-                            <span className="fw-semibold text-muted">
-                              Created:
-                            </span>{" "}
-                            {dayjs(role.createdAt).format(
-                              "DD MMM YYYY, hh:mm A",
-                            )}
-                          </small>
-                          <small>
-                            <span className="fw-semibold text-muted">
-                              Updated:
-                            </span>{" "}
-                            {dayjs(role.updatedAt).format(
-                              "DD MMM YYYY, hh:mm A",
-                            )}
-                          </small>
-                        </div>
-                      </td>
-                      <td style={{ minWidth: "100px", fontSize: "15px" }}>
-                        <i
-                          className="fa-solid fa-key text-warning me-2"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => openPermissionModal(role)}
-                        ></i>
+        <div className="row g-3 mb-3">
+          <div className="col-md-10 col-7">
+            <h4 className="fw-bold mb-0">Roles</h4>
+          </div>
+          <div className="col-md-2 col-5 text-end">
+            <button className="btn btn-primary btn-sm" onClick={openAddModal}>
+              + Add Role
+            </button>
+          </div>
+        </div>
 
-                        <i
-                          className="fa-solid fa-pen-to-square text-primary me-2"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => openEditModal(role)}
-                        ></i>
+        {/* FILTER */}
+        <div className="row g-3 mb-3">
+          <div className="col-md-6 col-12">
+            <input
+              type="text"
+              name="search"
+              className="form-control form-control-sm"
+              placeholder="Search Role (Name, Description)"
+              value={filters.search}
+              onChange={handleFilterChange}
+            />
+          </div>
+        </div>
 
-                        <i
-                          className="fa-solid fa-trash text-danger"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleDelete(role.id)}
-                        ></i>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        {/* APPLIED FILTER */}
+        {filters.search && (
+          <div className="row g-3 mb-3">
+            <div className="col-auto">
+              <span className="badge bg-secondary">
+                Search: {filters.search}
+                <i
+                  className="fa fa-times ms-1"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setFilters({ search: "" });
+                    setCurrentPage(1);
+                  }}
+                ></i>
+              </span>
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+        )}
 
-      {/* PAGINATION */}
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          Page {currentPage} of {totalPages || 1} • {filteredRoles.length}{" "}
-          records
-        </div>
-        <div>
-          <button
-            className="btn btn-sm border-0"
-            onClick={goToPreviousPage}
-            disabled={currentPage === 1}
-          >
-            <i className="fa-solid fa-chevron-left"></i>
-          </button>
-          <button
-            className="btn btn-sm border-0"
-            onClick={goToNextPage}
-            disabled={currentPage === totalPages || totalPages === 0}
-          >
-            <i className="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
+        {/* TABLE */}
+        <div className="card border-0 mb-3">
+          <div className="card-body p-0">
+            {loading ? (
+              <div className="text-center p-3">Loading...</div>
+            ) : (
+              <div className="table-responsive rounded">
+                <table className="table table-striped table-hover align-middle mb-0 small">
+                  <thead className="table-dark">
+                    <tr>
+                      <th>ID</th>
+                      <th>Role Name</th>
+                      <th>Description</th>
+                      <th>Date & Time</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentRoles.map((role) => (
+                      <tr key={role.id}>
+                        <td style={{ minWidth: "50px" }}>{role.id}</td>
+                        <td style={{ minWidth: "120px" }}>{role.name}</td>
+                        <td style={{ minWidth: "280px" }}>
+                          {role.description}
+                        </td>
+                        <td style={{ minWidth: "250px" }}>
+                          <div className="d-flex flex-column">
+                            <small>
+                              <span className="fw-semibold text-muted">
+                                Created:
+                              </span>{" "}
+                              {dayjs(role.createdAt).format(
+                                "DD MMM YYYY, hh:mm A",
+                              )}
+                            </small>
+                            <small>
+                              <span className="fw-semibold text-muted">
+                                Updated:
+                              </span>{" "}
+                              {dayjs(role.updatedAt).format(
+                                "DD MMM YYYY, hh:mm A",
+                              )}
+                            </small>
+                          </div>
+                        </td>
+                        <td style={{ minWidth: "100px", fontSize: "15px" }}>
+                          <i
+                            className="fa-solid fa-key text-warning me-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => openPermissionModal(role)}
+                          ></i>
 
-      {/* ROLE MODAL */}
-      <div className="modal fade" id="roleModal" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <form onSubmit={handleSubmit}>
+                          <i
+                            className="fa-solid fa-pen-to-square text-primary me-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => openEditModal(role)}
+                          ></i>
+
+                          <i
+                            className="fa-solid fa-trash text-danger"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleDelete(role.id)}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* PAGINATION */}
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            Page {currentPage} of {totalPages || 1} • {filteredRoles.length}{" "}
+            records
+          </div>
+          <div>
+            <button
+              className="btn btn-sm border-0"
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+            >
+              <i className="fa-solid fa-chevron-left"></i>
+            </button>
+            <button
+              className="btn btn-sm border-0"
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages || totalPages === 0}
+            >
+              <i className="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        {/* ROLE MODAL */}
+        <div className="modal fade" id="roleModal" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <form onSubmit={handleSubmit}>
+                <div className="modal-header">
+                  <h5 className="modal-title">
+                    {formData.id ? "Edit Role" : "Add Role"}
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <div className="mb-3">
+                    <label className="form-label small text-muted">
+                      Role Name <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      className="form-control form-control-sm"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label small text-muted">
+                      Description
+                    </label>
+                    <textarea
+                      name="description"
+                      className="form-control form-control-sm"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="submit" className="btn btn-sm btn-primary">
+                    {formData.id ? "Update" : "Create"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* PERMISSION MODAL */}
+        <div className="modal fade" id="permissionModal" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered modal-xl">
+            <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">
-                  {formData.id ? "Edit Role" : "Add Role"}
+                  {permissionRole?.name} - Permissions
                 </h5>
                 <button
                   type="button"
@@ -431,110 +484,61 @@ function RoleManagement() {
                 ></button>
               </div>
               <div className="modal-body">
-                <div className="mb-3">
-                  <label className="form-label small text-muted">
-                    Role Name <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    className="form-control form-control-sm"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label small text-muted">
-                    Description
-                  </label>
-                  <textarea
-                    name="description"
-                    className="form-control form-control-sm"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                  />
-                </div>
+                {Object.keys(groupedPermissions).map((category) => (
+                  <div key={category} className="mb-3">
+                    {/* Category header with checkbox on the right */}
+                    <div className="d-flex align-items-center">
+                      <h6 className="fw-semibold mb-0">{category}</h6>
+                      <input
+                        className="form-check-input form-check-input-sm ms-2 mb-1"
+                        type="checkbox"
+                        checked={groupedPermissions[category].every((perm) =>
+                          selectedPermissions.includes(perm.id),
+                        )}
+                        onChange={(e) =>
+                          handleSelectAll(category, e.target.checked)
+                        }
+                      />
+                    </div>
+                    <hr />
+
+                    {/* Permissions under the category */}
+                    <div className="row">
+                      {groupedPermissions[category].map((perm) => (
+                        <div className="col-md-4 mb-1" key={perm.id}>
+                          <div className="form-check form-check-sm">
+                            <label className="form-check-label small text-muted mb-0">
+                              {perm.key}
+                            </label>
+                            <input
+                              className="form-check-input form-check-input-sm"
+                              type="checkbox"
+                              checked={selectedPermissions.includes(perm.id)}
+                              onChange={() => handlePermissionChange(perm.id)}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className="modal-footer">
-                <button type="submit" className="btn btn-sm btn-primary">
-                  {formData.id ? "Update" : "Create"}
+                <button className="btn btn-secondary" data-bs-dismiss="modal">
+                  Cancel
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={handlePermissionSubmit}
+                >
+                  Submit
                 </button>
               </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      {/* PERMISSION MODAL */}
-      <div className="modal fade" id="permissionModal" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered modal-xl">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">
-                {permissionRole?.name} - Permissions
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div className="modal-body">
-              {Object.keys(groupedPermissions).map((category) => (
-                <div key={category} className="mb-3">
-                  {/* Category header with checkbox on the right */}
-                  <div className="d-flex align-items-center">
-                    <h6 className="fw-semibold mb-0">{category}</h6>
-                    <input
-                      className="form-check-input form-check-input-sm ms-2 mb-1"
-                      type="checkbox"
-                      checked={groupedPermissions[category].every((perm) =>
-                        selectedPermissions.includes(perm.id),
-                      )}
-                      onChange={(e) =>
-                        handleSelectAll(category, e.target.checked)
-                      }
-                    />
-                  </div>
-                  <hr />
-
-                  {/* Permissions under the category */}
-                  <div className="row">
-                    {groupedPermissions[category].map((perm) => (
-                      <div className="col-md-4 mb-1" key={perm.id}>
-                        <div className="form-check form-check-sm">
-                          <label className="form-check-label small text-muted mb-0">
-                            {perm.key}
-                          </label>
-                          <input
-                            className="form-check-input form-check-input-sm"
-                            type="checkbox"
-                            checked={selectedPermissions.includes(perm.id)}
-                            onChange={() => handlePermissionChange(perm.id)}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="modal-footer">
-              <button className="btn btn-secondary" data-bs-dismiss="modal">
-                Cancel
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={handlePermissionSubmit}
-              >
-                Submit
-              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

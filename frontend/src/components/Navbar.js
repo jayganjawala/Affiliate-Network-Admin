@@ -126,7 +126,7 @@ function Navbar() {
   });
 
   return (
-    <>
+    <section className="poppins-regular">
       <header className="bg-white py-3 sticky-top">
         <div className="container">
           <div className="row align-items-center">
@@ -311,7 +311,7 @@ function Navbar() {
           </div>
         </div>
       )}
-    </>
+    </section>
   );
 }
 

@@ -342,145 +342,149 @@ function Dashboard() {
   };
 
   return (
-    <div className="container py-3">
-      {/* Header */}
-      <div className="row">
-        <div className="col-md-12 col-12">
-          <h4 className="fw-bold fs-3">Welcome</h4>
-        </div>
-        <div className="col-md-12 col-12 pt-2">
-          <small>
-            Last Updated: {dayjs(new Date()).format("DD MMM YYYY, hh:mm A")}
-          </small>
-        </div>
-      </div>
-
-      {/* Summary Cards */}
-      <div className="row g-3 pt-1">
-        <div className="col-md-3 col-6">
-          <div className="p-3 rounded bg-body border-start border-5 border-primary border-opacity-25">
+    <section className="poppins-regular py-3">
+      <div className="container">
+        {/* Header */}
+        <div className="row">
+          <div className="col-md-12 col-12">
+            <h4 className="fw-bold fs-3">Welcome</h4>
+          </div>
+          <div className="col-md-12 col-12 pt-2">
             <small>
-              <i className="fas fa-users"></i> Total Users
+              Last Updated: {dayjs(new Date()).format("DD MMM YYYY, hh:mm A")}
             </small>
-            <h5>{summaryCards.totalUsers}</h5>
           </div>
         </div>
 
-        <div className="col-md-3 col-6">
-          <div className="p-3 rounded bg-body border-start border-5 border-success border-opacity-25">
-            <small>
-              <i className="fas fa-user-plus"></i> Total Client
-            </small>
-            <h5>{summaryCards.totalClient}</h5>
-          </div>
-        </div>
-
-        <div className="col-md-3 col-6">
-          <div className="p-3 rounded bg-body border-start border-5 border-warning border-opacity-25">
-            <small>
-              <i className="fas fa-indian-rupee-sign"></i> Total Revenue
-            </small>
-            <h5>{summaryCards.totalRevenue.toLocaleString("en-IN")}</h5>
-          </div>
-        </div>
-
-        <div className="col-md-3 col-6">
-          <div className="p-3 rounded bg-body border-start border-5 border-danger border-opacity-25">
-            <small>
-              <i className="fas fa-headset"></i> Support Tickets
-            </small>
-            <h5>{summaryCards.totalSupportTickets}</h5>
-          </div>
-        </div>
-      </div>
-
-      <div className="row pt-3 g-3">
-        {/* Lead Chart */}
-        <div className="col-lg-6 col-12">
-          <div className="border rounded p-3 bg-body h-100 d-flex flex-column">
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <h6 className="fw-bold mb-0">
-                <i className="fas fa-chart-column"></i> Leads ({leadYear})
-              </h6>
-              <div>
-                <button
-                  className="btn btn-outline-secondary border-0 btn-sm"
-                  onClick={goToPreviousLeadYear}
-                >
-                  <i className="fas fa-chevron-left"></i>
-                </button>
-                <button
-                  className="btn btn-outline-secondary border-0 btn-sm ms-1"
-                  onClick={goToNextLeadYear}
-                >
-                  <i className="fas fa-chevron-right"></i>
-                </button>
-              </div>
+        {/* Summary Cards */}
+        <div className="row g-3 pt-1">
+          <div className="col-md-3 col-6">
+            <div className="p-3 rounded bg-body border-start border-5 border-primary border-opacity-25">
+              <small>
+                <i className="fas fa-users"></i> Total Users
+              </small>
+              <h5>{summaryCards.totalUsers}</h5>
             </div>
-            <div style={{ flex: 1, minHeight: "300px" }}>
-              <Bar data={leadStatusData} options={leadStatusOptions} />
+          </div>
+
+          <div className="col-md-3 col-6">
+            <div className="p-3 rounded bg-body border-start border-5 border-success border-opacity-25">
+              <small>
+                <i className="fas fa-user-plus"></i> Total Client
+              </small>
+              <h5>{summaryCards.totalClient}</h5>
+            </div>
+          </div>
+
+          <div className="col-md-3 col-6">
+            <div className="p-3 rounded bg-body border-start border-5 border-warning border-opacity-25">
+              <small>
+                <i className="fas fa-indian-rupee-sign"></i> Total Revenue
+              </small>
+              <h5>{summaryCards.totalRevenue.toLocaleString("en-IN")}</h5>
+            </div>
+          </div>
+
+          <div className="col-md-3 col-6">
+            <div className="p-3 rounded bg-body border-start border-5 border-danger border-opacity-25">
+              <small>
+                <i className="fas fa-headset"></i> Support Tickets
+              </small>
+              <h5>{summaryCards.totalSupportTickets}</h5>
             </div>
           </div>
         </div>
 
-        {/* Payments Chart */}
-        <div className="col-lg-6 col-12">
-          <div className="border rounded p-3 bg-body h-100 d-flex flex-column">
-            <div className="row g-3 align-items-center mb-2">
-              <div className="col-lg-6 col-12">
+        <div className="row pt-3 g-3">
+          {/* Lead Chart */}
+          <div className="col-lg-6 col-12">
+            <div className="border rounded p-3 bg-body h-100 d-flex flex-column">
+              <div className="d-flex justify-content-between align-items-center mb-2">
                 <h6 className="fw-bold mb-0">
-                  <i className="fas fa-money-bill-trend-up"></i> Payments
-                  Overview ({paymentsYear})
+                  <i className="fas fa-chart-column"></i> Leads ({leadYear})
                 </h6>
-              </div>
-
-              <div className="col-lg-6 col-12">
-                <div className="row g-2">
-                  <div className="col-6">
-                    <select
-                      className="form-select form-select-sm"
-                      value={paymentsYear}
-                      onChange={(e) => setPaymentsYear(Number(e.target.value))}
-                    >
-                      {Object.keys(paymentsData).map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="col-6">
-                    <select
-                      className="form-select form-select-sm"
-                      value={selectedMonth}
-                      onChange={(e) => setSelectedMonth(e.target.value)}
-                    >
-                      <option value="all">All Months</option>
-                      {paymentMonths.map((month) => (
-                        <option key={month} value={month}>
-                          {dayjs(`${paymentsYear}-${month}-01`).format("MMM")}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div>
+                  <button
+                    className="btn btn-outline-secondary border-0 btn-sm"
+                    onClick={goToPreviousLeadYear}
+                  >
+                    <i className="fas fa-chevron-left"></i>
+                  </button>
+                  <button
+                    className="btn btn-outline-secondary border-0 btn-sm ms-1"
+                    onClick={goToNextLeadYear}
+                  >
+                    <i className="fas fa-chevron-right"></i>
+                  </button>
                 </div>
+              </div>
+              <div style={{ flex: 1, minHeight: "300px" }}>
+                <Bar data={leadStatusData} options={leadStatusOptions} />
               </div>
             </div>
+          </div>
 
-            <div style={{ flex: 1, minHeight: "300px" }}>
-              {paymentLabels.length ? (
-                <Bar data={mergedChartData} options={mergedChartOptions} />
-              ) : (
-                <div className="d-flex justify-content-center align-items-center h-100 text-muted">
-                  No data available
+          {/* Payments Chart */}
+          <div className="col-lg-6 col-12">
+            <div className="border rounded p-3 bg-body h-100 d-flex flex-column">
+              <div className="row g-3 align-items-center mb-2">
+                <div className="col-lg-6 col-12">
+                  <h6 className="fw-bold mb-0">
+                    <i className="fas fa-money-bill-trend-up"></i> Payments
+                    Overview ({paymentsYear})
+                  </h6>
                 </div>
-              )}
+
+                <div className="col-lg-6 col-12">
+                  <div className="row g-2">
+                    <div className="col-6">
+                      <select
+                        className="form-select form-select-sm"
+                        value={paymentsYear}
+                        onChange={(e) =>
+                          setPaymentsYear(Number(e.target.value))
+                        }
+                      >
+                        {Object.keys(paymentsData).map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="col-6">
+                      <select
+                        className="form-select form-select-sm"
+                        value={selectedMonth}
+                        onChange={(e) => setSelectedMonth(e.target.value)}
+                      >
+                        <option value="all">All Months</option>
+                        {paymentMonths.map((month) => (
+                          <option key={month} value={month}>
+                            {dayjs(`${paymentsYear}-${month}-01`).format("MMM")}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ flex: 1, minHeight: "300px" }}>
+                {paymentLabels.length ? (
+                  <Bar data={mergedChartData} options={mergedChartOptions} />
+                ) : (
+                  <div className="d-flex justify-content-center align-items-center h-100 text-muted">
+                    No data available
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

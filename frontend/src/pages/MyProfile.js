@@ -61,88 +61,90 @@ function MyProfile() {
   }, [token, navigate]);
 
   return (
-    <div className="container mt-3">
-      <div className="row mb-3">
-        <div className="col">
-          <i
-            className="fa fa-arrow-left mt-2"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/dashboard")}
-          ></i>
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <div className="col">
-          <h4 className="fw-bold mb-0">My Profile</h4>
-        </div>
-      </div>
-
-      <div className="p-3 rounded bg-body border-start border-5 border-success border-opacity-50 mb-3">
-        <h5 className="fw-semibold mb-3">
-          <i className="fa-solid fa-circle-user"></i> Personal Information
-        </h5>
-
-        <div className="row g-3">
-          <div className="col-md-4">
-            <small className="text-muted">
-              <i className="fa-solid fa-user text-secondary"></i> Name
-            </small>
-            <h6>{profile.name}</h6>
-          </div>
-
-          <div className="col-md-4">
-            <small className="text-muted">
-              <i className="fa-solid fa-envelope text-warning"></i> Email
-            </small>
-            <h6>{profile.email}</h6>
-          </div>
-
-          <div className="col-md-4">
-            <small className="text-muted">
-              <i className="fa-solid fa-phone text-success"></i> Phone
-            </small>
-            <h6>{profile.phone}</h6>
+    <section className="poppins-regular py-3">
+      <div className="container">
+        <div className="row mb-3">
+          <div className="col">
+            <i
+              className="fa fa-arrow-left mt-2"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/dashboard")}
+            ></i>
           </div>
         </div>
-      </div>
 
-      <div className="p-3 rounded bg-body border-start border-5 border-warning border-opacity-50 mb-3">
-        <h5 className="fw-semibold mb-3">
-          <i className="fa-solid fa-building"></i> Organization
-        </h5>
-
-        <div className="row g-3">
-          <div className="col-md-6">
-            <small className="text-muted">
-              <i className="fa-solid fa-user text-secondary"></i> Name
-            </small>
-            <h6>{profile.organization.name}</h6>
+        <div className="row mb-3">
+          <div className="col">
+            <h4 className="fw-bold mb-0">My Profile</h4>
           </div>
+        </div>
 
-          <div className="col-md-6">
-            <small className="text-muted">
-              <i className="fa-solid fa-phone text-success"></i> Phone
-            </small>
-            <h6>{profile.organization.phone}</h6>
+        <div className="p-3 rounded bg-body border-start border-5 border-success border-opacity-50 mb-3">
+          <h5 className="fw-semibold mb-3">
+            <i className="fa-solid fa-circle-user"></i> Personal Information
+          </h5>
+
+          <div className="row g-3">
+            <div className="col-md-4">
+              <small className="text-muted">
+                <i className="fa-solid fa-user text-secondary"></i> Name
+              </small>
+              <h6>{profile.name}</h6>
+            </div>
+
+            <div className="col-md-4">
+              <small className="text-muted">
+                <i className="fa-solid fa-envelope text-warning"></i> Email
+              </small>
+              <h6>{profile.email}</h6>
+            </div>
+
+            <div className="col-md-4">
+              <small className="text-muted">
+                <i className="fa-solid fa-phone text-success"></i> Phone
+              </small>
+              <h6>{profile.phone}</h6>
+            </div>
           </div>
+        </div>
 
-          <div className="col-md-6">
-            <small className="text-muted">
-              <i className="fa-solid fa-envelope text-warning"></i> Email
-            </small>
-            <h6>{profile.organization.email}</h6>
-          </div>
+        <div className="p-3 rounded bg-body border-start border-5 border-warning border-opacity-50 mb-3">
+          <h5 className="fw-semibold mb-3">
+            <i className="fa-solid fa-building"></i> Organization
+          </h5>
 
-          <div className="col-md-6">
-            <small className="text-muted">
-              <i className="fa-solid fa-location-dot text-danger"></i>Address
-            </small>
-            <h6>{profile.organization.address}</h6>
+          <div className="row g-3">
+            <div className="col-md-6">
+              <small className="text-muted">
+                <i className="fa-solid fa-user text-secondary"></i> Name
+              </small>
+              <h6>{profile.organization.name}</h6>
+            </div>
+
+            <div className="col-md-6">
+              <small className="text-muted">
+                <i className="fa-solid fa-phone text-success"></i> Phone
+              </small>
+              <h6>{profile.organization.phone}</h6>
+            </div>
+
+            <div className="col-md-6">
+              <small className="text-muted">
+                <i className="fa-solid fa-envelope text-warning"></i> Email
+              </small>
+              <h6>{profile.organization.email}</h6>
+            </div>
+
+            <div className="col-md-6">
+              <small className="text-muted">
+                <i className="fa-solid fa-location-dot text-danger"></i>Address
+              </small>
+              <h6>{profile.organization.address}</h6>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
