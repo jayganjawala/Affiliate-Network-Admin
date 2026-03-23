@@ -3,8 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "bootstrap";
-import { toast } from "react-toastify";
-import Toast from "../components/Toast";
+import { toast } from "react-hot-toast";
 import PermissionContext from "../context/PermissionContext";
 // import dayjs from "dayjs";
 
@@ -210,8 +209,6 @@ function ServicesManagement() {
 
   return (
     <div className="container mt-3">
-      <Toast />
-
       <div className="row mb-3">
         <div className="col">
           <i

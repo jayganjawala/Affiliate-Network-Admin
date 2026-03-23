@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { toast } from "react-toastify";
-import Toast from "../components/Toast";
+import { toast } from "react-hot-toast";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5002/api";
@@ -63,8 +62,6 @@ function MyProfile() {
 
   return (
     <div className="container mt-3">
-      <Toast />
-
       <div className="row mb-3">
         <div className="col">
           <i

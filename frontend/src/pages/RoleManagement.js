@@ -3,8 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "bootstrap";
-import { toast } from "react-toastify";
-import Toast from "../components/Toast";
+import { toast } from "react-hot-toast";
 import dayjs from "dayjs";
 
 const API_BASE_URL =
@@ -266,8 +265,6 @@ function RoleManagement() {
   /* ================= UI ================= */
   return (
     <div className="container mt-3">
-      <Toast />
-
       {/* Header */}
       <div className="row mb-3">
         <div className="col">

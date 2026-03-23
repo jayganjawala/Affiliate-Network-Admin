@@ -24,6 +24,8 @@ import PermissionManagement from "./pages/PermissionManagement";
 import ServicesManagement from "./pages/ServicesManagement";
 import ProtectedLayout from "./layouts/ProtectedLayout";
 
+import Toast from "./components/Toast";
+
 function App() {
   const [permissions, setPermissions] = useState(() => {
     const stored = localStorage.getItem("permissions");
@@ -52,6 +54,7 @@ function App() {
   return (
     <PermissionContext.Provider value={{ permissions, setPermissions }}>
       <BrowserRouter>
+        <Toast />
         <ScrollToTop />
 
         <Routes>

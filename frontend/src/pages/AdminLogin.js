@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Toast from "../components/Toast";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-hot-toast";
 
 function AdminLogin({ setAuth, setPermissions }) {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -87,7 +85,8 @@ function AdminLogin({ setAuth, setPermissions }) {
 
         if (setAuth) setAuth(true);
 
-        setTimeout(() => navigate("/dashboard"), 800);
+        // setTimeout(() => navigate("/dashboard"), 800);
+        navigate("/dashboard");
       } else {
         toast.error(response.data.error || "Invalid OTP");
       }
@@ -241,8 +240,6 @@ function AdminLogin({ setAuth, setPermissions }) {
           </p>
         </div>
       </div>
-
-      <Toast />
     </div>
   );
 }

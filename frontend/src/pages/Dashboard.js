@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import {
   Chart as ChartJS,
   CategoryScale,

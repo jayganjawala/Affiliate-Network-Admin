@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
-import Toast from "../components/Toast";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-hot-toast";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5002/api";
@@ -50,7 +48,8 @@ function Navbar() {
       localStorage.removeItem("permissions");
 
       toast.success("Logged out successfully!");
-      setTimeout(() => navigate("/", { replace: true }), 500);
+      // setTimeout(() => navigate("/", { replace: true }), 500);
+      navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
       const message =
@@ -312,8 +311,6 @@ function Navbar() {
           </div>
         </div>
       )}
-
-      <Toast />
     </>
   );
 }
