@@ -239,7 +239,7 @@ function AdminLogin({ setAuth, setPermissions }) {
             </div>
 
             <p className="text-center text-muted small mt-3 mb-0">
-              © {new Date().getFullYear()} EquityPandit Advisor
+              © {new Date().getFullYear()} Affiliate Network
             </p>
           </div>
         </div>

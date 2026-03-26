@@ -147,7 +147,7 @@ function Navbar() {
                   alt="EP-Investment-Advisor"
                 /> */}
 
-                <img src="JD.svg" className="img-fluid" alt="logo" />
+                <img src="/JD.svg" className="img-fluid" alt="logo" />
               </Link>
             </div>
 
